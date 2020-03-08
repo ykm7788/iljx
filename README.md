@@ -12,3 +12,8 @@ library(Rmisc)
 library("ape")
 library("vegan")
 ```
+
+Run by
+```
+shiny::runGitHub('iljx', 'ykm7788')
+```

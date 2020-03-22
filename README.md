@@ -15,5 +15,11 @@ library("vegan")
 
 Run by
 ```
+library(shiny)
 shiny::runGitHub('iljx', 'ykm7788')
+```
+else
+```
+library(shiny)
+runGist("https://gist.github.com/ykm7788/a16d09e7833fc1b37bc3e6f64d391d77")
 ```

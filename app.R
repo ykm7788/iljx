@@ -477,7 +477,7 @@ panel.ma.data <- tabPanel(
 
 panel.ma.general <- tabPanel(
   "General   ",
-  numericInput("ma.groupcol", "col num. for group, empty for no group", value = ""),
+  numericInput("ma.groupcol", "row num. for group, empty for no group", value = ""),
   selectInput(
     "ma.fill.palette", "color palette for fill",
     c("npg", "aaas", "nejm", "lancet", "jama", "jco", "ucscgb", "igv", "uchicago", "simpsons", "rickandmorty", "brewer", "discrete", "continuous", "default")

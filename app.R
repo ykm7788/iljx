@@ -1,5 +1,5 @@
 
-options(encoding = "UTF-8",expressions = 10000,max.print = 999999)
+options(encoding = "UTF-8")
 library(ggpubr)
 library(shiny)
 library(ggthemes)
@@ -280,8 +280,8 @@ panel.general <- tabPanel(
   numericInput("sa.facet", "col num. for facet, empty for NO facet", value = ""),
   checkboxInput("sa.facet.scale", "Scare free ?", TRUE),
   textInput("sa.title", "Plot title", value = ""),
-  numericInput("sa.plot.width", "Plot width for download, inch", value = "4"),
-  numericInput("sa.plot.height", "Plot height for download, inch", value = "4")
+  numericInput("sa.plot.width", "Plot width for download, inch", value = "6.4"),
+  numericInput("sa.plot.height", "Plot height for download, inch", value = "6.4")
 )
 
 panel.statistic <- tabPanel(
@@ -617,7 +617,7 @@ server <- function(input, output) {
     for (i in 1:ncol(sa.data[, -input$sa.y])) {
       sa.data[, i] <- as.factor(as.character(sa.data[, i]))
     }
-    sa.data[, input$sa.y] <- as.numeric(sa.data[, input$sa.y])
+    sa.data[, input$sa.y] <- as.numeric(as.character(sa.data[, input$sa.y]))
 
     rawplot <- ggplot(sa.data, aes(x = sa.data[, input$sa.x], y = sa.data[, input$sa.y]))
     sa.boxplot <- plot.raw(sa.data, input, rawplot)
@@ -665,7 +665,7 @@ server <- function(input, output) {
     for (i in 1:ncol(sa.data[, -input$sa.y])) {
       sa.data[, i] <- as.factor(as.character(sa.data[, i]))
     }
-    sa.data[, input$sa.y] <- as.numeric(sa.data[, input$sa.y])
+    sa.data[, input$sa.y] <- as.numeric(as.character(sa.data[, input$sa.y]))
     rawplot <- ggplot(sa.data, aes(x = sa.data[, input$sa.x], y = sa.data[, input$sa.y]))
     sa.violinplot <- plot.raw(sa.data, input, rawplot)
 
@@ -721,7 +721,7 @@ server <- function(input, output) {
     for (i in 1:ncol(sa.data[, -input$sa.y])) {
       sa.data[, i] <- as.factor(as.character(sa.data[, i]))
     }
-    sa.data[, input$sa.y] <- as.numeric(sa.data[, input$sa.y])
+    sa.data[, input$sa.y] <- as.numeric(as.character(sa.data[, input$sa.y]))
 
     if (is.null(input$sa.line.groups) != T) {
       mean.group <- as.numeric(strsplit(input$sa.line.groups, split = ",")[[1]])
@@ -796,7 +796,7 @@ server <- function(input, output) {
     for (i in 1:ncol(sa.data[, -input$sa.y])) {
       sa.data[, i] <- as.factor(as.character(sa.data[, i]))
     }
-    sa.data[, input$sa.y] <- as.numeric(sa.data[, input$sa.y])
+    sa.data[, input$sa.y] <- as.numeric(as.character(sa.data[, input$sa.y]))
 
     if (is.null(input$sa.bar.groups) != T) {
       mean.group <- as.numeric(strsplit(input$sa.bar.groups, split = ",")[[1]])
@@ -850,7 +850,7 @@ server <- function(input, output) {
     for (i in 1:ncol(sa.data[, -input$sa.y])) {
       sa.data[, i] <- as.factor(as.character(sa.data[, i]))
     }
-    sa.data[, input$sa.y] <- as.numeric(sa.data[, input$sa.y])
+    sa.data[, input$sa.y] <- as.numeric(as.character(sa.data[, input$sa.y]))
 
     if (input$sa.density.mean == T) {
       density.mean <- "mean"
@@ -899,8 +899,8 @@ server <- function(input, output) {
       otu.pca <- summary(prcomp(otu.data))
       otu.pca.data <- data.frame(
         sample = rownames(otu.pca$x),
-        x = as.numeric(otu.pca$x[, 1]),
-        y = as.numeric(otu.pca$x[, 2])
+        x = as.numeric(as.character(otu.pca$x[, 1])),
+        y = as.numeric(as.character(otu.pca$x[, 2]))
       )
       pca.plot <- ggplot(otu.pca.data, aes(x = x, y = y)) +
         geom_point(size = input$ma.pca.size)+
@@ -918,8 +918,8 @@ server <- function(input, output) {
       otu.pca <- summary(prcomp(otu.data))
       otu.pca.data <- data.frame(
         sample = rownames(otu.pca$x),
-        x = as.numeric(otu.pca$x[, 1]),
-        y = as.numeric(otu.pca$x[, 2]),
+        x = as.numeric(as.character(otu.pca$x[, 1])),
+        y = as.numeric(as.character(otu.pca$x[, 2])),
         class = group.factor
       )
       otu.pca.data$class = as.factor(otu.pca.data$class)
@@ -1068,8 +1068,8 @@ server <- function(input, output) {
         envi.data$env[2*i-1] = as.character(envi$envi[i])
         envi.data$env[2*i] = as.character(envi$envi[i])
       }
-      envi.data$x = as.numeric(envi.data$x)
-      envi.data$y = as.numeric(envi.data$y)
+      envi.data$x = as.numeric(as.character(envi.data$x))
+      envi.data$y = as.numeric(as.character(envi.data$y))
       envi.data$env = as.factor(envi.data$env)
       
       cca.plot = ggplot(data=samples,aes(x,y)) + 
@@ -1121,8 +1121,8 @@ server <- function(input, output) {
         envi.data$env[2*i-1] = as.character(envi$envi[i])
         envi.data$env[2*i] = as.character(envi$envi[i])
       }
-      envi.data$x = as.numeric(envi.data$x)
-      envi.data$y = as.numeric(envi.data$y)
+      envi.data$x = as.numeric(as.character(envi.data$x))
+      envi.data$y = as.numeric(as.character(envi.data$y))
       envi.data$env = as.factor(envi.data$env)
       
       cca.plot = ggplot(data=samples,aes(x,y)) + 
@@ -1151,8 +1151,8 @@ server <- function(input, output) {
         species.data$species[2*i-1] = as.character(species.data.select$species[i])
         species.data$species[2*i] = as.character(species.data.select$species[i])
       }
-      species.data$x = as.numeric(species.data$x)
-      species.data$y = as.numeric(species.data$y)
+      species.data$x = as.numeric(as.character(species.data$x))
+      species.data$y = as.numeric(as.character(species.data$y))
       
       cca.plot = cca.plot +  
         geom_path(data=species.data,aes(x=x,y=y,group=species),color="red",
@@ -1235,10 +1235,9 @@ server <- function(input, output) {
   
 }
 
-
 ############################     Run the application   ############################
 shinyApp(ui = ui, server = server)
-
+#shiny::runGitHub('iljx', 'ykm7788')
 
 
 
